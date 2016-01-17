@@ -1,0 +1,16 @@
+---
+# Setup/install tasks.
+- include: setup.yml
+
+- name: Add default username and password for MySQL connection.
+  lineinfile: >
+    dest=/etc/phpmyadmin/config.inc.php
+    state=present
+    regexp="^.+\['{{ item.key }}'\].+$"
+    line="$cfg['Servers'][1]['{{ item.key }}'] = '{{ item.value }}';"
+    insertbefore="^\?>"
+  with_items:
+  - { key: auth_type, value: "{{ phpmyadmin_auth_type }}" }
+  - { key: user, value: "{{ phpmyadmin_mysql_user }}" }
+  - { key: password, value: "{{ phpmyadmin_mysql_password }}"}
+  - { key: AllowNoPassword, value: "{{ phpmyadmin_allow_no_password }}"}

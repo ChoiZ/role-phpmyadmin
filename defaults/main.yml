@@ -1,0 +1,5 @@
+---
+phpmyadmin_auth_type: config
+phpmyadmin_mysql_user: root
+phpmyadmin_mysql_password: "{{ mariadb.root_password }}"
+phpmyadmin_allow_no_password: TRUE
